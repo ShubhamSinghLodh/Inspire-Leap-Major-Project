@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="page02.css">
+    
+</head>
+<body>
+     <!-- RIGHT SIDE (APP UI) -->
+      <div class="main-b">
+        <div class="que"> 
+          <img src="logo 02.jpeg" class="logo-butn">
+          <i class="fa-sharp fa-regular fa-circle-question"></i>
+         </div>
+
+  <div class="right">
+    <div class="sai">
+    <h4 id="greeting">Hi User</h4>
+    </div>
+    <div class="top-box">
+      <div class="input-box">
+        <label class="label-from">From,</label> <br><br>
+        <img src="load.jpeg" class="load">
+        <input type="text" id="fromLocation" placeholder="Load from...">
+      </div>
+              <br>
+      <div class="input-box">
+        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+        <label class="label-to">To, </label>
+        <i class="fa-regular fa-arrow-up-arrow-down"></i>         <br>
+        <img src="unload.jpeg" class="unload">
+        <input type="text" id="toLocation" placeholder="Unload to...">
+      </div>
+
+      <button class="confirm-btn" id="confirmBtn"> <b>Confirm</b></button>
+    </div>
+
+    <div class="offer">
+      <h2>%</h2>
+      <h3>10% off on 2 Wheeler & Trucks</h3> 
+      <p>Subscribe to Porter Gold Now!</p>
+    </div>
+    <br>
+    <div class="sale">
+            <!-- <img src="sale.jpeg" class="sale"> -->
+            <p>Special offer</p>
+      <h3>SALE</h3>
+      <h3>UP TO 50% OFF</h3>
+      <p>ONLY <br> TODAY</p>
+      <button type="button">BUY NOW</button>
+    </div>
+
+    <div class="delivery">
+  <img src="delivery.jpeg" class="sale">
+  <h3>DELIVERY</h3>
+  <br>
+  <div class="bottom">
+    <hr class="hr">
+    
+    
+  </div>
+    </div>
+  </div>
+
+</div>
+<script>
+
+// Show username
+window.onload = function () {
+
+    const username = localStorage.getItem("username");
+
+    console.log("Username:", username);
+
+    const greeting = document.getElementById("greeting");
+
+    if (username && greeting) {
+
+        greeting.innerText = `Hi ${username}`;
+
+    }
+
+}
+
+// Confirm button
+document.getElementById("confirmBtn").addEventListener("click", function() {
+
+    const fromLocation = document.getElementById("fromLocation").value.trim();
+
+    const toLocation = document.getElementById("toLocation").value.trim();
+
+    if (!fromLocation || !toLocation) {
+
+        alert("Please enter both From and To locations.");
+
+        return;
+
+    }
+
+    localStorage.setItem("fromLocation", fromLocation);
+
+    localStorage.setItem("toLocation", toLocation);
+
+    window.location.href = "page03.html";
+
+});
+
+</script>
+</body>
+</html>

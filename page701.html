@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Page 3 - Personal Information</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+</head>
+<style>
+:root{
+
+--field:#d9b9b0;
+
+--accent:#f5a11d;
+
+}
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+font-family:"Poppins";
+
+}
+
+body{
+
+background:#f7f2eb;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:100vh;
+
+}
+
+.phone{
+
+width:350px;
+height:650px;
+background:#fff;
+
+border:3px solid #666;
+
+padding:15px;
+
+position:relative;
+
+}
+
+.content{
+
+position:relative;
+
+}
+
+.progress{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr 1fr 1fr;
+
+gap:5px;
+
+margin-bottom:15px;
+
+}
+
+.progress span{
+
+height:5px;
+
+background:#d7cbc4;
+
+border-radius:0px;
+
+}
+
+.progress .active{
+
+background:orange;
+
+}
+
+.section-head{
+
+margin-bottom:12px;
+
+font-size:14px;
+
+}
+
+.label{
+
+display:block;
+
+margin-top:8px;
+
+margin-bottom:4px;
+
+font-size:12px;
+
+}
+
+.field,
+.textarea{
+
+width:100%;
+
+border:2px solid var(--field);
+
+padding:10px;
+
+outline:none;
+
+}
+
+.textarea{
+
+height:80px;
+
+resize:none;
+
+}
+
+.next-btn{
+
+position:absolute;
+
+right:40px;
+
+bottom:100px;
+
+width:45px;
+
+height:45px;
+
+border:none;
+
+border-radius:50%;
+
+background:
+
+linear-gradient(
+180deg,
+#ffb660,
+#ef6f4c
+);
+
+color:white;
+
+font-size:22px;
+
+cursor:pointer;
+
+}
+
+.captcha{
+
+width:75px;
+
+height:70px;
+
+border:1px solid #ccc;
+
+margin-top:176px;
+
+margin-left:255px;
+
+}
+
+</style>
+<body>
+
+<div class="phone">
+
+<div class="content">
+
+<div class="progress">
+
+<span class="active"></span>
+
+<span class="active"></span>
+
+<span class="active"></span>
+
+<span></span>
+
+</div>
+
+
+<div class="section-head">
+
+<b>Personal Information</b>
+
+</div>
+
+
+<label class="label">
+
+Name
+
+</label>
+
+<input
+class="field"
+id="driverName"
+type="text"
+placeholder="Enter Name">
+
+
+<label class="label">
+
+Date of Birth
+
+</label>
+
+<input
+class="field"
+id="driverDob"
+type="date">
+
+
+<label class="label">
+
+Gender
+
+</label>
+
+<select
+class="field"
+id="gender">
+
+<option value="">
+Select Gender
+</option>
+
+<option>
+Male
+</option>
+
+<option>
+Female
+</option>
+
+<option>
+Other
+</option>
+
+</select>
+
+
+<label class="label">
+
+Bio
+
+</label>
+
+<textarea
+class="textarea"
+id="driverBio"
+placeholder="Write your bio">
+</textarea>
+
+
+<button
+class="next-btn"
+id="savePersonalBtn">
+
+&#8594;
+
+</button>
+
+<div class="captcha"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+document
+.getElementById("savePersonalBtn")
+.addEventListener("click", function () {
+
+    const personalData = {
+
+        phone: localStorage.getItem("driverPhone"),
+
+        name: document.getElementById("driverName").value,
+
+        dob: document.getElementById("driverDob").value,
+
+        gender: document.getElementById("gender").value,
+
+        bio: document.getElementById("driverBio").value
+
+    };
+
+    localStorage.setItem(
+        "driverPersonalData",
+        JSON.stringify(personalData)
+    );
+
+    window.location.href = "page702.html";
+
+});
+
+</script>
+
+</body>
+
+</html>

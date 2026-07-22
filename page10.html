@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page 1 - Selecting Available Loads</title>
+
+  <link rel="stylesheet" href="page1.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<style>
+
+    :root {
+  --page-bg: #f7f2eb;
+  --paper: #fffdfa;
+  --ink: #241a16;
+  --muted: #736560;
+  --frame: #6a625d;
+  --line: #ebe3dd;
+  --header-bg: #f7f5f5;
+  --field-bg: #fff9f2;
+  --field-border: #eadfcf;
+  --search-bg: #9d93b4;
+  --search-accent: #9d93b4;
+  --nav-bg: #111111;
+  --shadow: 0 8px 18px rgba(53, 32, 21, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(243, 228, 214, 0.76),
+      rgba(255, 255, 255, 0) 8%,
+      rgba(255, 255, 255, 0) 92%,
+      rgba(243, 228, 214, 0.76)
+    ),
+
+    var(--page-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.phone {
+  position: relative;
+  width: 350px;
+  min-height: 650px;
+  border: 2px solid var(--frame);
+  background: #fff;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.phone-header {
+  min-height: 26px;
+  padding: 4px 6px;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-butn {
+  width: 130px;
+  height: 30px;
+  background-color: #f2eded;
+}
+
+.header-icons {
+  display: flex;
+  gap: 5px;
+  color: #6f655f;
+  font-size: 8px;
+}
+
+.main-b {
+  flex: 1;
+  background-color: #fef7f2d8;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sai {
+  background-color: #fef7f2d8;
+  width: 107%;
+  margin-left: -15px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.sai h4 {
+  margin-top: 10px;
+  font-weight: 750;
+}
+
+.top-box {
+  width: 100%;
+  border: 2px solid rgb(231, 118, 26);
+  border-bottom: 5px solid rgb(231, 118, 26);
+  padding: 1rem;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.input-box {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.label-from,
+.label-to {
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 40px;
+}
+
+.load,
+.unload {
+  width: 18px;
+  height: 18px;
+}
+
+.input-box input {
+  flex: 1;
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.search-btn {
+  display: block;
+  width: 250px;
+  height: 30px;
+  margin: 12px auto 8px;
+  min-height: 18px;
+  border: 0;
+  border-radius: 4px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0)
+    ),
+    linear-gradient(
+      90deg,
+      var(--search-accent) 0 12px,
+      var(--search-bg) 12px 100%
+    );
+  color: #fff;
+  font: 600 10px/1 "Poppins", sans-serif;
+  cursor: pointer;
+}
+
+.result-box {
+  min-height: 350px;
+  padding: 10px;
+  display: block;
+  overflow-y: auto;
+}
+
+.nav {
+  position: absolute;
+  left: 0;
+  right: 55px;
+  bottom: 0;
+  height: 55px;
+  background: var(--nav-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+  cursor: pointer;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  font-size: 9px;
+}
+
+.captcha {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 56px;
+  height: 56px;
+  border: 1px solid #dcdcdc;
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 35%,
+      #e7f1ff 35% 62%,
+      #ffffff 62%
+    ),
+    #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+</style>
+<body>
+
+<div class="phone">
+
+  <div class="phone-header">
+
+    <div class="brand-mark">
+      <img src="logo 02.jpeg" class="logo-butn">
+    </div>
+
+    <div class="header-icons">
+      <span>&#128276;</span>
+      <span>&#10067;</span>
+    </div>
+
+  </div>
+
+  <div class="main-b">
+
+    <div class="sai">
+      <h4 id="greeting">Hi saiteja...</h4>
+    </div>
+
+    <div class="top-box">
+
+      <div class="input-box">
+        <label class="label-from">From</label>
+
+        <img src="load.jpeg" class="load">
+
+        <input type="text" id="fromLocation" placeholder="Load from...">
+      </div>
+
+      <br>
+
+      <div class="input-box">
+
+        <label class="label-to">To</label>
+
+        <img src="unload.jpeg" class="unload">
+
+        <input type="text" id="toLocation" placeholder="Unload to...">
+
+      </div>
+
+      <button class="search-btn" id="searchBtn" type="button">
+        Search
+      </button>
+
+      <div class="result-box" id="resultBox">
+        <b></b>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="nav">
+
+    <div class="nav-item">
+      <span>&#8962;</span>
+      <span>Loads</span>
+    </div>
+
+    <div class="nav-item">
+      <span>&#128269;</span>
+      <span>Sell & Buy</span>
+    </div>
+
+    <div class="nav-item">
+      <span>&#128221;</span>
+      <span>Finance & Insurance</span>
+    </div>
+
+    <div class="nav-item">
+      <span>&#128100;</span>
+      <span>Fuel</span>
+    </div>
+
+  </div>
+
+  <div class="captcha"></div>
+
+</div>
+
+<script>
+
+const searchBtn = document.getElementById("searchBtn");
+const resultBox = document.getElementById("resultBox");
+
+const driverName = localStorage.getItem("driverName");
+
+if(driverName){
+    document.getElementById("greeting").innerHTML =
+    `Hi ${driverName}...`;
+}
+
+searchBtn.addEventListener("click", async function () {
+
+    const fromLocation =
+    document.getElementById("fromLocation").value.trim();
+
+    const toLocation =
+    document.getElementById("toLocation").value.trim();
+
+    if(!fromLocation || !toLocation){
+
+        alert("Please enter From and To locations");
+        return;
+
+    }
+
+    resultBox.innerHTML = "Searching Loads...";
+
+    try {
+
+        const response = await fetch(
+
+            `http://localhost:3000/api/search-loads?fromLocation=${encodeURIComponent(fromLocation)}&toLocation=${encodeURIComponent(toLocation)}`
+
+        );
+
+        const loads = await response.json();
+
+       if(loads.length === 0){
+
+    resultBox.innerHTML =
+    "<b>No Loads Available</b>";
+
+    return;
+}
+
+// save loads if needed later
+localStorage.setItem(
+    "availableLoads",
+    JSON.stringify(loads)
+);
+
+// open page 04
+window.location.href = "page04.html";
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+        alert("Server Error");
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

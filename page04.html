@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders Waiting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="page04.css">
+</head>
+<body>
+ 
+ <section class="board-a">
+
+    <h1 class="board-title">Orders Waiting</h1>
+
+    <div id="waitingOrders"></div>
+
+</section>
+
+
+
+<section class="board-b">
+
+    <h1 class="board-title">Accepted Orders</h1>
+
+    <div id="acceptedOrders"></div>
+
+</section>
+<script>
+
+async function loadBookings() {
+
+    const response = await fetch("http://localhost:3000/api/bookings");
+
+    const bookings = await response.json();
+
+    const waitingContainer = document.getElementById("waitingOrders");
+
+    const acceptedContainer = document.getElementById("acceptedOrders");
+
+    waitingContainer.innerHTML = "";
+
+    acceptedContainer.innerHTML = "";
+
+    bookings.forEach((booking) => {
+
+        const card = `
+
+        <article class="order-card">
+
+            <div class="order-copy">
+
+                <p>
+                    <span class="label">Customer:</span>
+                    ${booking.customerName}
+                </p>
+
+                <p>
+                    <span class="label">Phone:</span>
+                    ${booking.phone}
+                </p>
+
+                <p>
+                    <span class="label">Goods:</span>
+                    ${booking.goods}
+                </p>
+
+                <p>
+                    <span class="label">Truck:</span>
+                    ${booking.truck}
+                </p>
+
+                <p>
+                    <span class="label">From:</span>
+                    ${booking.fromLocation}
+                </p>
+
+                <p>
+                    <span class="label">To:</span>
+                    ${booking.toLocation}
+                </p>
+
+            </div>
+
+            <div class="actions">
+
+                ${
+                    booking.status === "Waiting"
+
+                    ?
+
+                    `<button
+                        class="pill accept"
+                        onclick="acceptOrder('${booking._id}')"
+                    >
+                        Accept
+                    </button>`
+
+                    :
+
+                    `<button class="pill accept">
+                        Accepted
+                    </button>`
+                }
+
+            </div>
+
+        </article>
+
+        `;
+
+        if (booking.status === "Waiting") {
+
+            waitingContainer.innerHTML += card;
+
+        } else {
+
+            acceptedContainer.innerHTML += card;
+
+        }
+
+    });
+
+}
+
+
+
+async function acceptOrder(id) {
+
+    try {
+
+        await fetch(`http://localhost:3000/api/bookings/${id}`, {
+
+            method: "PUT"
+
+        });
+
+        loadBookings();
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+
+
+
+loadBookings();
+
+</script>
+</body>
+</html>

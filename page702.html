@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page 702 - Experience and Data</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--page-bg:#f7f2eb;
+--field-border:#d9b9b0;
+--accent:#ef6f4c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Poppins",sans-serif;
+}
+
+body{
+background:var(--page-bg);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.phone{
+width:350px;
+background:#fff;
+border:2px solid #666;
+padding:15px;
+}
+
+.photo-wrap{
+text-align:center;
+margin-bottom:15px;
+}
+
+.photo-title{
+display:block;
+font-size:12px;
+margin-bottom:8px;
+}
+
+.avatar{
+width:70px;
+height:70px;
+margin:auto;
+border-radius:50%;
+border:5px solid black;
+
+background:
+radial-gradient(circle at 50% 35%,#f6d19b 0 18%,transparent 20%),
+linear-gradient(
+180deg,
+#163f91 0 40%,
+#f6d19b 40% 50%,
+#111 50%
+);
+}
+
+.section-head{
+margin-bottom:15px;
+}
+
+.label{
+display:block;
+margin-top:10px;
+margin-bottom:5px;
+font-size:12px;
+}
+
+.field,
+.select-field{
+width:100%;
+height:40px;
+padding:10px;
+border:1px solid var(--field-border);
+outline:none;
+}
+
+.select-field{
+margin-bottom:10px;
+}
+
+.start-btn{
+width:100%;
+height:45px;
+margin-top:20px;
+border:none;
+border-radius:25px;
+background:orange;
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+}
+
+.start-btn:hover{
+opacity:0.9;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="photo-wrap">
+<span class="photo-title">Upload Pic</span>
+<div class="avatar"></div>
+</div>
+
+<div class="section-head">
+<b>Experience and Vehicle Details</b>
+</div>
+
+<label class="label">Years of Experience</label>
+<input
+class="field"
+id="experience"
+type="text"
+placeholder="Enter Experience">
+
+<label class="label">Vehicle Type</label>
+
+<select
+class="select-field"
+id="vehicleType">
+
+<option value="">Select Vehicle Type</option>
+
+<option>Mini Pickup</option>
+<option>Pickup</option>
+<option>Open Truck</option>
+<option>LCV Truck</option>
+<option>Dumper Truck</option>
+<option>Tipper Truck</option>
+<option>Container Truck</option>
+<option>Trailer Truck</option>
+<option>Mixer Truck</option>
+
+</select>
+
+<label class="label">Vehicle Model</label>
+<input
+class="field"
+id="vehicleModel"
+type="text"
+placeholder="Enter Vehicle Model">
+
+<label class="label">Vehicle Number</label>
+<input
+class="field"
+id="vehicleNumber"
+type="text"
+placeholder="Enter Vehicle Number">
+
+<label class="label">DL Number</label>
+<input
+class="field"
+id="dlNumber"
+type="text"
+placeholder="Enter DL Number">
+
+<label class="label">PAN Number</label>
+<input
+class="field"
+id="panNumber"
+type="text"
+placeholder="Enter PAN Number">
+
+<button
+class="start-btn"
+id="startJourneyBtn">
+
+Start Your Journey
+
+</button>
+
+</div>
+
+<script>
+
+document
+.getElementById("startJourneyBtn")
+.addEventListener("click", async function () {
+
+    const personalData =
+    JSON.parse(
+        localStorage.getItem("driverPersonalData")
+    );
+
+    const driverData = {
+
+        ...personalData,
+
+        experience:
+        document.getElementById("experience").value,
+
+        vehicleType:
+        document.getElementById("vehicleType").value,
+
+        vehicleModel:
+        document.getElementById("vehicleModel").value,
+
+        vehicleNumber:
+        document.getElementById("vehicleNumber").value,
+
+        dlNumber:
+        document.getElementById("dlNumber").value,
+
+        panNumber:
+        document.getElementById("panNumber").value
+
+    };
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:3000/api/drivers",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(driverData)
+            }
+        );
+
+        const data = await response.json();
+
+        if(data.success){
+
+            alert(
+                "Registration Completed Successfully"
+            );
+
+            localStorage.removeItem(
+                "driverPersonalData"
+            );
+
+            window.location.href =
+            "page08.html";
+
+        }
+        else{
+
+            alert("Failed To Save Data");
+
+        }
+
+    }
+    catch(error){
+
+        console.log(error);
+
+        alert("Server Error");
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page3</title>
+  <link rel="stylesheet" href="page03.css">
+ 
+</head>
+
+
+<body>
+    
+    <div class="booking-container" id="bookingPage">
+        <div id="bookingStatus" class="status-banner hidden" style="display:none;padding:12px;margin:12px 0;border:1px solid #ccc;border-radius:10px;background:#f9f9f9;font-weight:600;"></div>
+        
+    <div id="page1">
+        <div class="header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬅ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Choose a truck</div>
+      <p>Select Date and Time</p>
+        <div class="row">
+            <input type="date" id="date" class="input-box">
+            <input type="time" id="time" class="input-box">
+        </div>
+
+
+        <div class="drop">
+          <label for="goods">Goods Type</label>
+        <select id="goods">
+            <option>House Shifting</option>
+            <option>Office Shifting</option>
+            <option>Construction Material</option>
+            <option>Industrial Goods</option>
+        </select>
+        </div>
+
+        <h3>Choose Trucks</h3>
+
+        <div class="truck truck-1" onclick="selectTruck(this, 'LCV 2.5-7 Tons')">
+  <img src="truck1.jpeg" alt="LCV Truck">
+          <span>LCV</span>
+          <span>Capacity: 2.5-7 Tons</span>
+        </div>
+
+        <div class="truck truck-2" onclick="selectTruck(this, 'Open 7-11 Tons')">
+  <img src="truck2.jpeg" alt="Open Truck">
+          <span>Open</span>
+          <span>Capacity: 7-11 Tons</span>
+        </div>
+
+        <div class="truck truck-3" onclick="selectTruck(this, 'Dumper 9-16 Tons')">
+  <img src="truck3.jpeg" alt="Dumper Truck">
+          <span>Dumper</span>
+          <span>Capacity: 9-16 Tons</span>
+        </div>
+
+        <div class="truck truck-4" onclick="selectTruck(this, 'Tipper 9-24 Tons')">
+  <img src="truck4.jpeg" alt="Tipper Truck">
+          <span>Tipper</span>
+            <span>Capacity: 9-24 Tons</span>
+        </div>
+
+
+        <div class="truck truck-5" onclick="selectTruck(this, 'Container 9-30 Tons')">
+  <img src="truck5.jpeg" alt="Container Truck">
+          <span>Container</span>
+            <span>Capacity: 9-30 Tons</span>
+        </div>
+
+
+        <div class="truck truck-6" onclick="selectTruck(this, 'Trailer 16-43 Tons')">
+  <img src="truck6.jpeg" alt="Trailer Truck">
+          <span>Trailer</span>
+            <span>Capacity: 16-43 Tons</span>
+        </div>
+
+
+        <div class="truck truck-7" onclick="selectTruck(this, 'Trailer 20-36 Tons')">
+  <img src="truck7.jpeg" alt="Trailer Truck">
+          <span>Trailer</span>
+            <span>Capacity: 20-36 Tons</span>
+        </div>
+            <button id="bookBtn" onclick="goToConfirm()" type="button">Book Pickup</button>
+          </div>  
+
+
+    <!-- PAGE 2 -->
+
+    <div id="page2" class="hidden">
+        <div class="header" onclick="goBack()">⬅ Back</div>
+
+        <h3>Confirm Details</h3>
+
+        <div class="box" id="truckDetails"></div>
+
+        <div class="label">Date</div>
+        <div class="box" id="confirmDate"></div>
+
+        <div class="label">Time</div>
+        <div class="box" id="confirmTime"></div>
+
+        <div class="label">From Location</div>
+        <div class="box" id="confirmFrom"></div>
+
+        <div class="label">Goods Type</div>
+        <div class="box" id="confirmGoods"></div>
+
+        <div class="label">To Location</div>
+        <div class="box" id="confirmTo"></div>
+
+        <button type="button" onclick="submitBooking()">Confirm Pickup</button>
+    </div>
+
+    <!-- Success message -->
+    <div id="successPage" class="hidden">
+        <div class="header" onclick="goBack()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬅ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Back to Booking</div>
+        <h3>✅ Booking Confirmed!</h3>
+        <div class="box" id="successMessage"></div>
+        <button onclick="resetForm()">New Booking</button>
+    </div>
+</div>
+
+
+
+
+<script>
+    let selectedTruck = '';
+
+function selectTruck(element, truckName) {
+    let trucks = document.querySelectorAll('.truck');
+    trucks.forEach(t => t.classList.remove('active'));
+
+    element.classList.add('active');
+    selectedTruck = truckName;
+}
+
+function goToConfirm() {
+    if (!selectedTruck) {
+        alert('Please select a truck!');
+        return;
+    }
+    const dateInput = document.getElementById('date').value;
+    const timeInput = document.getElementById('time').value;
+    const goodsInput = document.getElementById('goods').value;
+    const fromInput = localStorage.getItem("fromLocation");
+    const toInput = localStorage.getItem("toLocation");
+    if (!dateInput || !timeInput || !goodsInput || !fromInput || !toInput) {
+        alert('Please fill all fields!');
+        return;
+    }
+
+    document.getElementById('page1').classList.add('hidden');
+    document.getElementById('page2').classList.remove('hidden');
+
+    document.getElementById('truckDetails').textContent = selectedTruck;
+    document.getElementById('confirmDate').textContent = dateInput;
+    document.getElementById('confirmTime').textContent = timeInput;
+    document.getElementById('confirmGoods').textContent = goodsInput;
+    document.getElementById('confirmFrom').textContent = fromInput;
+    document.getElementById('confirmTo').textContent = toInput;
+}
+
+function goBack() {
+    document.getElementById('page2').classList.add('hidden');
+    document.getElementById('page1').classList.remove('hidden');
+}
+
+async function submitBooking() {
+
+    const bookingData = {
+        customerName: localStorage.getItem('username'),
+        phone: localStorage.getItem('phone'),
+        date: document.getElementById('date').value,
+        time: document.getElementById('time').value,
+        goods: document.getElementById('goods').value,
+        truck: selectedTruck,
+        fromLocation: localStorage.getItem("fromLocation"),
+        toLocation: localStorage.getItem("toLocation")
+    };
+
+    console.log('Submitting booking:', bookingData);
+
+    try {
+        const response = await fetch('http://localhost:3000/api/bookings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bookingData)
+        });
+
+        const text = await response.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (parseError) {
+            throw new Error(`Invalid JSON response: ${text}`);
+        }
+
+        if (!response.ok) {
+            throw new Error(`Server responded ${response.status}: ${data.message || text}`);
+        }
+
+        console.log('Booking response:', data);
+
+        if (data.success) {
+            if (data.booking && data.booking._id) {
+                localStorage.setItem('bookingId', data.booking._id);
+                localStorage.setItem('bookingStatus', data.booking.status || 'Waiting');
+            }
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('successPage').classList.remove('hidden');
+            loadBookingStatus();
+            alert("Booking Saved Successfully!");
+        } else {
+            alert(data.message || "Booking Failed");
+        }
+    } catch (error) {
+        console.error('Booking submission failed:', error);
+        alert(`Server Error: ${error.message}`);
+    }
+}
+
+
+function setBookingStatusDisplay(statusText) {
+    const statusEl = document.getElementById('bookingStatus');
+    if (!statusEl) return;
+    const isConfirmed = statusText.toLowerCase() === 'accepted' || statusText.toLowerCase() === 'confirmed';
+    statusEl.textContent = `Order status: ${isConfirmed ? 'Confirmed' : 'Pending'}`;
+    statusEl.style.display = 'block';
+    statusEl.style.borderColor = isConfirmed ? '#0c6' : '#d9a900';
+    statusEl.style.background = isConfirmed ? '#e6fff0' : '#fff9db';
+}
+
+async function loadBookingStatus() {
+    const bookingId = localStorage.getItem('bookingId');
+    if (!bookingId) {
+        const statusEl = document.getElementById('bookingStatus');
+        if (statusEl) {
+            statusEl.style.display = 'none';
+        }
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/bookings/${bookingId}`);
+        if (!response.ok) {
+            throw new Error('Booking not found');
+        }
+
+        const booking = await response.json();
+        const status = booking.status || 'Waiting';
+        setBookingStatusDisplay(status);
+        const resultText = status === 'Accepted' ? 'Confirmed' : 'Pending';
+        document.getElementById('successMessage').textContent = `Your booking has been submitted successfully. Current status: ${resultText}.`;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function resetForm() {
+    document.getElementById('successPage').classList.add('hidden');
+    document.getElementById('page1').classList.remove('hidden');
+    selectedTruck = '';
+    document.querySelectorAll('.truck').forEach(t => t.classList.remove('active'));
+    document.getElementById('date').value = '';
+    document.getElementById('time').value = '';
+    document.getElementById('goods').value = 'House Shifting';
+   
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date().toISOString().split('T')[0];
+    const dateEl = document.getElementById('date');
+    if (dateEl) {
+        dateEl.min = today;
+        dateEl.value = today;
+    }
+    loadBookingStatus();
+    setInterval(loadBookingStatus, 5000);
+});
+
+</script>
+
+</body>
+</html>
